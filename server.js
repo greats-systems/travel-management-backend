@@ -3,12 +3,21 @@ import bodyParser from 'body-parser'
 import cors from 'cors'
 import env from 'dotenv'
 
+// Entry point
+import root from './app/routes/root.js'
+
+// User registration handler
 import profiles from './app/routes/profiles/profiles.js'
 
+// User search interest handler
+import profile_searches from './app/routes/profiles/profile_searches.js'
+
+// Flight prices and bookings handlers
 import prices from './app/routes/prices/prices.js'
 import flight_deals from './app/routes/flight_deals/flight_deals.js'
 import flight_status from './app/routes/flight_status/flight_status.js'
 import booking from './app/routes/booking/booking.js'
+import profile_bookings from './app/routes/profiles/profile_bookings.js'
 
 env.config()
 
@@ -18,7 +27,11 @@ const PORT = 5000
 app.use(bodyParser.json())
 app.use(cors({origin: 'http://localhost:4200'}))
 
+root(app)
+
 profiles(app)
+profile_searches(app)
+profile_bookings(app)
 
 prices(app)
 flight_deals(app)

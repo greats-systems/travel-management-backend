@@ -26,13 +26,13 @@ export default async function bookFlight(request, response) {
             }
         })
     )
-
+    console.log(`Flight offers:\n${pricedResponse.data}`)
     const bookingResponse = await amadeus.booking.flightOrders.post(
         JSON.stringify({
             data: {
                 type: 'flight-order',
                 flightOffers: [pricedResponse.data.flightOffers[0]],
-                travelers: [request.body.passengers]  
+                travelers: request.body.passengers
 
             }
         })
