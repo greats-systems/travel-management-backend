@@ -1,6 +1,4 @@
-import e from "express";
 import amadeus from "../../amadeus/amadeus.js";
-import getFlightPrices from "../prices/prices.js";
 
 export default async function bookFlight(request, response) {
   try {
@@ -23,7 +21,7 @@ export default async function bookFlight(request, response) {
         JSON.stringify({
             data:{
                 type: 'flight-offers-pricing',
-                flightOffers: [selectedOffer]
+                flightOffers: [selectedOffer] 
             }
         })
     )
@@ -40,11 +38,17 @@ export default async function bookFlight(request, response) {
     )
     response.status(200).send(bookingResponse.data)
 
-  } catch (error) {
-    console.log(error)
+  } catch (error) {    
     if(error.response.result.errors[0].detail==="No fare applicable"){
+      console.log(error)
       response.status(404).send('This flight is full')
     }
-    response.status(500).send("Failed to process request");
+    else if(error.response.result.errors[0].detail===`Could not sell segment ${1 || 2 || 3 || 4}`){
+      response.status(404).send('There are no more flights at this price. Would you like to book another one?')
+    }
+    else {
+      console.log(error)
+      response.status(500).send("Failed to process request");
+    }
   }
 }
