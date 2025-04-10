@@ -1,3 +1,4 @@
+import e from "express";
 import amadeus from "../../amadeus/amadeus.js";
 import getFlightPrices from "../prices/prices.js";
 
@@ -40,7 +41,10 @@ export default async function bookFlight(request, response) {
     response.status(200).send(bookingResponse.data)
 
   } catch (error) {
-    console.log(error);
+    console.log(error)
+    if(error.response.result.errors[0].detail==="No fare applicable"){
+      response.status(404).send('This flight is full')
+    }
     response.status(500).send("Failed to process request");
   }
 }
