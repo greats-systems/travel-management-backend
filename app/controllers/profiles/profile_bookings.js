@@ -10,8 +10,11 @@ async function createFlightBooking(request, response) {
       "itineraries": request.body.itineraries,
       "travelers": request.body.travelers,
       "price": request.body.price,
+      "departure_date":request.body.departureDate
     })
+    .order("departure_date", {ascending: false})
     .then((data) => {
+      console.log(data.data)
       response.status(200).send(data);
     })
     .catch((error) => {

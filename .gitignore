@@ -1,4 +1,4 @@
 .env
 node_modules/
-testing.js
+test*.js
 script.sh

@@ -1,6 +1,7 @@
 import amadeus from "../../amadeus/amadeus.js";
 
 export default async function bookFlight(request, response) {
+  var selectedOffer
   try {
     // const { flightId, passengers, payment } = request.body
     const search = await await amadeus.shopping.flightOffersSearch.get({
@@ -15,7 +16,7 @@ export default async function bookFlight(request, response) {
         currencyCode: "USD"
         // max: 1,
       });
-    const selectedOffer = search.data.find(o => o.id === request.body.flightId)
+    selectedOffer = search.data.find(o => o.id === request.body.flightId)
     console.log(`Offer:\n${selectedOffer}`)
     const pricedResponse = await amadeus.shopping.flightOffers.pricing.post(
         JSON.stringify({
@@ -45,6 +46,12 @@ export default async function bookFlight(request, response) {
     }
     else if(error.response.result.errors[0].detail===`Could not sell segment ${1 || 2 || 3 || 4}`){
       response.status(404).send('There are no more flights at this price. Would you like to book another one?')
+    }
+    else if (selectedOffer == null){
+      response.status(404).send('No flight offers available')
+    }
+    else if(error.response.result.errors[0].detail==='Itinerary schedule change detected between segments requested and actual segment sell is exceeding 15 minutes'){
+      response.status(404).send('This flight\s booking schedlue has changed. Kindly book a different flight')
     }
     else {
       console.log(error)

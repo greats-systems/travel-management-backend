@@ -18,6 +18,7 @@ import flight_deals from './app/routes/flight_deals/flight_deals.js'
 import flight_status from './app/routes/flight_status/flight_status.js'
 import booking from './app/routes/booking/booking.js'
 import profile_bookings from './app/routes/profiles/profile_bookings.js'
+import shuttles from './app/routes/shuttles/shuttles.js'
 
 env.config()
 
@@ -32,6 +33,8 @@ root(app)
 profiles(app)
 profile_searches(app)
 profile_bookings(app)
+
+shuttles(app)
 
 prices(app)
 flight_deals(app)
