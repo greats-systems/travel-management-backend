@@ -11,11 +11,26 @@ async function createFlightInterest(request, response) {
         'user_id' : request.body.userID,
     })
     .then((data) => {
-        response.status(200).send(data)
+        response.status(200).send(data.statusText)
     })
     .catch((eror) => {
         response.status(500).send(eror)
     })
 }
 
-export { createFlightInterest }
+async function createShuttleInterest(request, response){
+    supabase.from('ShuttleInterest').insert({
+        'origin': request.body.origin,
+        'destination': request.body.destination,
+        'departure_date': request.body.departureDate,
+        'user_id': request.body.userID
+    })
+    .then((data) => {
+        response.status(200).send(data.statusText)
+    })
+    .catch((error) => {
+        response.status(500).send(error)
+    })
+}
+
+export { createFlightInterest, createShuttleInterest }

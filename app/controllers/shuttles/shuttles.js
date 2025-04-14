@@ -14,7 +14,7 @@ async function getShuttleCompanies(_, response){
 
 async function getShuttleCompany(request, response){
     await supabase
-    .from('ShuttleServiceCompanies')
+    .from('ShuttleServiceCompany')
     .select()
     .eq('name', request.body.companyName)
     .then((data)=>{
@@ -28,8 +28,9 @@ async function getShuttleCompany(request, response){
 async function getShuttleRoutes(request, response){
     await supabase
     .from('ShuttleRoutes')
-    .select()
-    .eq('company_id', request.body.companyID)
+    .select('*, ShuttleServiceCompany(company_id, name)')
+    .eq('origin', request.body.origin)
+    .eq('destination', request.body.destination)
     .then((data)=>{
         response.status(200).send(data.data)
     })
