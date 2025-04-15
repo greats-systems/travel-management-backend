@@ -19,6 +19,7 @@ import flight_status from './app/routes/flight_status/flight_status.js'
 import booking from './app/routes/booking/booking.js'
 import profile_bookings from './app/routes/profiles/profile_bookings.js'
 import shuttles from './app/routes/shuttles/shuttles.js'
+import flight_analytics from './app/routes/dashboard/flights/flight_analytics.js'
 
 env.config()
 
@@ -26,7 +27,15 @@ const app = express()
 const PORT = 5000
 
 app.use(bodyParser.json())
-app.use(cors({origin: 'http://localhost:4200'}))
+app.use(cors({
+    origin: [
+        'http://localhost:4200',
+        'http://localhost:3000',
+    ],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
+}))
 
 root(app)
 
@@ -40,6 +49,8 @@ prices(app)
 flight_deals(app)
 flight_status(app)
 booking(app)
+
+flight_analytics(app)
 
 
 app.listen(PORT, ()=> console.log(`Server running on port ${PORT}`))

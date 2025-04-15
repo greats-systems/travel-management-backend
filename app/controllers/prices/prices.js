@@ -12,7 +12,7 @@ export default async function getFlightPrices(request, response) {
         // children: request.body.children,
         // infants: request.body.infants,
         travelClass: request.body.travelClass,
-        currencyCode: "USD"
+        currencyCode: "USD",
         // max: 1,
       });
       response.status(200).send(apiResponse.data);
