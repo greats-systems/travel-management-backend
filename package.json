@@ -4,7 +4,8 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "test": "nodemon server.js"
+    "test": "nodemon server.js",
+    "dev": "nodemon test2.js"
   },
   "author": "Simon",
   "license": "ISC",
@@ -12,14 +13,17 @@
   "dependencies": {
     "@supabase/supabase-js": "^2.49.4",
     "amadeus": "^11.0.0",
+    "axios": "^1.8.4",
     "body-parser": "^2.2.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "html-pdf": "^3.0.1",
     "node-html-to-image": "^5.0.0",
-    "nodemon": "^3.1.9",
+    "nodemon": "^3.1.10",
+    "paynow": "^2.2.2",
     "pdfkit": "^0.17.0",
-    "router": "^2.2.0"
+    "router": "^2.2.0",
+    "uuid": "^11.1.0"
   }
 }

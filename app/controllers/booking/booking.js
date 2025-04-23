@@ -44,8 +44,8 @@ export default async function bookFlight(request, response) {
       console.log(error)
       response.status(404).send('This flight is full')
     }
-    else if(error.response.result.errors[0].title===`SEGMENT SELL FAILURE`){
-      response.status(404).send('There are no more flights available at this price. Would you like to book another one?')
+    else if(error.response.result.errors[0].detail===`Could not sell segment ${1 || 2 || 3 || 4}`){
+      response.status(404).send('There are no more flights at this price. Would you like to book another one?')
     }
     else if (selectedOffer == null){
       response.status(404).send('No flight offers available')
