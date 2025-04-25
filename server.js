@@ -21,6 +21,7 @@ import profile_bookings from './app/routes/profiles/profile_bookings.js'
 import shuttles from './app/routes/shuttles/shuttles.js'
 import flight_analytics from './app/routes/dashboard/flights/flight_analytics.js'
 import paynow_payment from './app/routes/paynow_payment/paynow_payment.js'
+import parcels from './app/routes/parcels/parcels.js'
 
 env.config()
 
@@ -54,6 +55,8 @@ booking(app)
 flight_analytics(app)
 
 paynow_payment(app)
+
+parcels(app)
 
 
 app.listen(PORT, ()=> console.log(`Server running on port ${PORT}`))

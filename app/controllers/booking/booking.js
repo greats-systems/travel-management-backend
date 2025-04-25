@@ -3,18 +3,14 @@ import amadeus from "../../amadeus/amadeus.js";
 export default async function bookFlight(request, response) {
   var selectedOffer
   try {
-    // const { flightId, passengers, payment } = request.body
     const search = await await amadeus.shopping.flightOffersSearch.get({
         originLocationCode: request.body.origin,
         destinationLocationCode: request.body.destination,
         departureDate: request.body.departureDate,
         returnDate: request.body.returnDate,
         adults: request.body.adults,
-        // children: request.body.children,
-        // infants: request.body.infants,
         travelClass: request.body.travelClass,
         currencyCode: "USD"
-        // max: 1,
       });
     selectedOffer = search.data.find(o => o.id === request.body.flightId)
     console.log(`Offer:\n${selectedOffer}`)

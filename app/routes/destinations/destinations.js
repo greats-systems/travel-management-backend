@@ -1,7 +1,7 @@
 import router from "../../router/router.js";
-import destinations from "../../controllers/destinations/destinations.js";
+import getDestinations from "../../controllers/destinations/destinations.js";
 
 export default (app) => {
-    router.get('/destinations', destinations)
+    router.get('/destinations', getDestinations)
     app.use('/', router)
 }

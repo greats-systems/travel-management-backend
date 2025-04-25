@@ -19,6 +19,7 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "html-pdf": "^3.0.1",
+    "node-fetch": "^3.3.2",
     "node-html-to-image": "^5.0.0",
     "nodemon": "^3.1.10",
     "paynow": "^2.2.2",

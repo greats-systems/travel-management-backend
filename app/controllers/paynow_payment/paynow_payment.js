@@ -15,20 +15,40 @@ async function makePayment(request, response) {
 }
 
 async function makeEcocashPayment(request, response) {
-    const payment = paynow.createPayment('Invoice 35', 'moyongqaa@gmail.com')
-    payment.add('Bus Fare', request.body.busFare)
-    paynow.sendMobile(payment, request.body.phoneNumber, 'ecocash').then(paynowResponse => {
-        if (paynowResponse.success) {
-            const instructions = paynowResponse.instructions
-            const pollURL = response.pollUrl
-            console.log(pollURL)
-            response.status(200).send('Ecocash payment successful!')
+    try {
+        const payment = paynow.createPayment('Invoice 35', 'moyongqaa@gmail.com')
+        payment.add('Bus Fare', request.body.busFare)
+        console.log('Payment Object After Adding Items:\n', payment);
+        const paynowResponse = await paynow.send(payment, request.body.phoneNumber, 'ecocash')
+        console.log('Paynow API Response:\n', response);
+
+        if (!paynowResponse.success) {
+            response.status(400).send(paynowResponse.error)
         } else {
-            console.log(paynowResponse.error)
+            response.status(200).send({
+                success: true,
+                paymentUrl: response.redirectUrl
+            })
         }
-    }).catch(e => {
-        console.log('Error', e)
-    })
+        /*
+        paynow.sendMobile(payment, request.body.phoneNumber, 'ecocash').then(paynowResponse => {
+            if (paynowResponse.success) {
+                const instructions = paynowResponse.instructions
+                const pollURL = response.pollUrl
+                console.log(pollURL)
+                response.status(200).send('Ecocash payment successful!')
+            } else {
+                console.log(paynowResponse.error)
+            }
+        }).catch(e => {
+            console.log('Error', e)
+        })
+        */
+    }
+    catch(error) {
+        console.error(error)
+        response.status(500).send(error)
+    }
 }
 
 export { makePayment, makeEcocashPayment }
