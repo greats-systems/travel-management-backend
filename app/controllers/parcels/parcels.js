@@ -19,7 +19,9 @@ async function createParcelShipment(request, response) {
         'destination': request.body.destination,
         'departure_date': request.body.departureDate,
         'shipping_company_id': request.body.companyID,
-        'shipping_cost': request.body.shippingCost
+        'courier_name': request.body.courierName,
+        'shipping_cost': request.body.shippingCost,
+        'status': 'In transit'
     })
     .then(data => {
         response.status(201).send(data.statusText)
@@ -33,6 +35,7 @@ async function viewParcelShipments(request, response) {
     await supabase.from('ParcelShipment')
     .select('*')
     .eq('user_id', request.body.userID)
+    .order('created_at', {ascending: false})
     .then(data => {
         response.status(200).send(data.data)
     })
