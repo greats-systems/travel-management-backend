@@ -22,6 +22,7 @@ import shuttles from './app/routes/shuttles/shuttles.js'
 import flight_analytics from './app/routes/dashboard/flights/flight_analytics.js'
 import paynow_payment from './app/routes/paynow_payment/paynow_payment.js'
 import parcels from './app/routes/parcels/parcels.js'
+import shuttle_analytics from './app/routes/dashboard/shuttles/shuttle_analytics.js'
 
 env.config()
 
@@ -53,6 +54,7 @@ flight_status(app)
 booking(app)
 
 flight_analytics(app)
+shuttle_analytics(app)
 
 paynow_payment(app)
 

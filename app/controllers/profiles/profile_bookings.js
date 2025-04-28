@@ -41,13 +41,19 @@ async function createShuttleBooking(request, response){
     'last_name': request.body.lastName,
     'phone_number': request.body.phoneNumber,
     'email': request.body.email,
-    'company_id': request.body.companyID,
-    'route_id': request.body.routeID,
+    'origin': request.body.origin,
+    'destination': request.body.destination,
     'departure_date': request.body.departureDate,
-    'amount_paid': request.body.amountPaid
+    'amount_paid': request.body.amountPaid,
+    'status': 'pending'
   })
   .then((data) => {
-    response.status(201).send(data.statusText)
+    if(data.statusText=='Created'){
+      response.status(201).send(data.statusText)
+    }
+    else {
+      response.status(400).send(data.error)
+    }
   })
   .catch((error) => {
     response.status(500).send(error)

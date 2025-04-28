@@ -35,7 +35,7 @@ async function makeShuttleEcocashPayment(request, response) {
         } else {
             response.status(200).send({
                 success: true,
-                paymentUrl: response.redirectUrl
+                paymentUrl: paynowResponse.redirectUrl
             })
         }
     }

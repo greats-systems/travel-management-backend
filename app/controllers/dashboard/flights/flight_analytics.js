@@ -12,4 +12,16 @@ async function getFlightInterestAnalyticsData(_, response){
     ])
 }
 
-export { getFlightInterestAnalyticsData }
+async function getFlightInterestRawData(_, response){
+    await supabase
+    .from('FlightInterest')
+    .select('*')
+    .then((data) => {
+        response.status(200).send(data.data)
+    })
+    .catch((error)=> [
+        response.status(500).send(error)
+    ])
+}
+
+export { getFlightInterestAnalyticsData, getFlightInterestRawData }
