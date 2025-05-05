@@ -9,12 +9,20 @@ async function createFlightInterest(request, response) {
         'one_way' : request.body.oneWay,
         'adults' : request.body.adults,
         'user_id' : request.body.userID,
+        'current_location_lat': request.body.currentLocationLat,
+        'current_location_long': request.body.currentLocationLong
     })
     .then((data) => {
-        response.status(200).send(data.statusText)
+        if(data.status == 201){
+            response.status(201).send(data.statusText)
+        }     
+        else{
+            response.status(data.status).send(data.error.message)
+        }
     })
-    .catch((eror) => {
-        response.status(500).send(eror)
+    .catch((error) => {
+        console.log(error)
+        response.status(500).send(error)
     })
 }
 
@@ -23,10 +31,12 @@ async function createShuttleInterest(request, response){
         'origin': request.body.origin,
         'destination': request.body.destination,
         'departure_date': request.body.departureDate,
-        'user_id': request.body.userID
+        'user_id': request.body.userID,
+        'current_location_lat': request.body.currentLocationLat,
+        'current_location_long': request.body.currentLocationLong
     })
     .then((data) => {
-        response.status(200).send(data.statusText)
+        response.status(201).send(data.statusText)
     })
     .catch((error) => {
         response.status(500).send(error)

@@ -23,6 +23,7 @@ import flight_analytics from './app/routes/dashboard/flights/flight_analytics.js
 import paynow_payment from './app/routes/paynow_payment/paynow_payment.js'
 import parcels from './app/routes/parcels/parcels.js'
 import shuttle_analytics from './app/routes/dashboard/shuttles/shuttle_analytics.js'
+import driver_journeys from './app/routes/profiles/driver_journeys.js'
 
 env.config()
 
@@ -59,6 +60,8 @@ shuttle_analytics(app)
 paynow_payment(app)
 
 parcels(app)
+
+driver_journeys(app)
 
 
 app.listen(PORT, ()=> console.log(`Server running on port ${PORT}`))

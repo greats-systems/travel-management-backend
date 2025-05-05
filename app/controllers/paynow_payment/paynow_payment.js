@@ -45,6 +45,29 @@ async function makeShuttleEcocashPayment(request, response) {
     }
 }
 
+async function makeRideEcocashPayment(request, response) {
+    try {
+        const payment = paynow.createPayment('Invoice 35', 'moyongqaa@gmail.com')
+        payment.add('Ride Fare', request.body.rideFare)
+        console.log('Payment Object After Adding Items:\n', payment);
+        const paynowResponse = await paynow.send(payment, request.body.phoneNumber, 'ecocash')
+        console.log('Paynow API Response:\n', response);
+
+        if (!paynowResponse.success) {
+            response.status(400).send(paynowResponse.error)
+        } else {
+            response.status(200).send({
+                success: true,
+                paymentUrl: paynowResponse.redirectUrl
+            })
+        }
+    }
+    catch(error) {
+        console.error(error)
+        response.status(500).send(error)
+    }
+}
+
 async function makeParcelPayment(request, response) {
     try {
         const payment = paynow.createPayment('Invoice 35', 'moyongqaa@gmail.com');
@@ -92,4 +115,4 @@ async function makeParcelEcocashPayment(request, response) {
 
 
 
-export { makeShuttlePayment, makeShuttleEcocashPayment, makeParcelPayment, makeParcelEcocashPayment }
+export { makeShuttlePayment, makeShuttleEcocashPayment, makeRideEcocashPayment, makeParcelPayment, makeParcelEcocashPayment }
