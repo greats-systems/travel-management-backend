@@ -3,8 +3,8 @@ import { createFlightBooking, getFlightBooking, createShuttleBooking, getShuttle
 
 export default(app)=>{
     router.post('/flight/booking/create', createFlightBooking)
-    router.get('/flight/bookings', getFlightBooking)
+    router.get('/flight/bookings/:userID', getFlightBooking)
     router.post('/shuttle/booking/create', createShuttleBooking)
-    router.get('/shuttle/bookings', getShuttleBooking)
+    router.get('/shuttle/bookings/:userID', getShuttleBooking)
     app.use('/', router)
 }

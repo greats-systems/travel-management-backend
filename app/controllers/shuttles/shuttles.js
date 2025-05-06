@@ -48,6 +48,7 @@ async function getShuttleRoutes(request, response){
     .eq('origin', request.body.origin)
     .eq('destination', request.body.destination)
     .then((data)=>{
+        console.log(data.data[0]['ShuttleServiceCompany']['name'])
         response.status(200).send(data.data)
     })
     .catch((error)=>{

@@ -17,30 +17,29 @@ const successResponse = (response, data, status = 200) => {
   });
 };
 
-// Journey Controller
+// RideJourney Controller
 const journeyController = {
-  async createJourney(request, response) {
+  async createRideJourney(request, response) {
     try {
       // Check for existing active journey
-      const { data: activeJourneys, error: checkError } = await supabase
-        .from('Journey')
+      const { data: activeRideJourneys, error: checkError } = await supabase
+        .from('RideJourney')
         .select('journey_id')
         .eq('user_id', request.body.userID)
         .neq('status', 'complete');
 
       if (checkError) throw checkError;
       
-      if (activeJourneys?.length > 0) {
+      if (activeRideJourneys?.length > 0) {
         return response.status(400).json({
           success: false,
           error: 'You already have an active journey',
-          // existingJourneyId: activeJourneys[0].user_id
         });
       }
 
       // Create new journey
       const { data, error } = await supabase
-        .from('Journey')
+        .from('RideJourney')
         .insert({
           origin: request.body.origin,
           destination: request.body.destination,
@@ -59,10 +58,10 @@ const journeyController = {
     }
   },
 
-  async getJourneys(request, response) {
+  async getRideJourneys(request, response) {
     try {
       const { data, error } = await supabase
-        .from('Journey')
+        .from('RideJourney')
         .select('*')
         .eq('user_id', request.params.userID);
 
@@ -73,10 +72,10 @@ const journeyController = {
     }
   },
 
-  async getActiveJourneys(request, response) {
+  async getActiveRideJourneys(request, response) {
     try {
       const { data, error } = await supabase
-        .from('Journey')
+        .from('RideJourney')
         .select('*')
         .eq('user_id', request.params.userID)
         .neq('status', 'complete');
@@ -84,18 +83,18 @@ const journeyController = {
       if (error) throw error;
       
       return successResponse(response, {
-        hasActiveJourney: data.length > 0,
-        activeJourney: data.length > 0 ? data[0] : null
+        hasActiveRideJourney: data.length > 0,
+        activeRideJourney: data.length > 0 ? data[0] : null
       });
     } catch (error) {
       return handleError(response, error, 'fetching active journeys');
     }
   },
 
-  async updateJourney(request, response) {
+  async updateRideJourney(request, response) {
     try {
       const { data, error } = await supabase
-        .from('Journey')
+        .from('RideJourney')
         .update({ status: request.body.status })
         .eq('user_id', request.body.userID)
         .select();
