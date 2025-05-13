@@ -1,37 +1,31 @@
 import router from "../../router/router.js";
-import flightDeals from "../../controllers/flight_deals/flight_deals.js";
+import getDestinations from "../../controllers/destinations/destinations.js";
 
 /**
  * @swagger
  * tags:
- *   - name: Flight Deals
- *     description: Discover flight deals and destination offers
+ *   - name: Destinations
+ *     description: Destination search and location information
  */
 
 /**
  * @swagger
- * /flight-deals:
+ * /destinations:
  *   get:
- *     tags: [Flight Deals]
- *     summary: Get flight deals from an origin
- *     description: Retrieve discounted flight destinations based on origin and maximum price
+ *     tags: [Destinations]
+ *     summary: Search for destinations
+ *     description: Retrieve location information based on city keywords
  *     parameters:
  *       - in: query
- *         name: origin
+ *         name: city
  *         required: true
  *         schema:
  *           type: string
- *           example: "NYC"
- *         description: IATA code of origin airport (e.g., JFK, LAX)
- *       - in: query
- *         name: maxPrice
- *         schema:
- *           type: integer
- *           example: 500
- *         description: Maximum price for flight deals in USD
+ *         description: City name or keyword to search for
+ *         example: "Paris"
  *     responses:
  *       200:
- *         description: Successful response with flight deals
+ *         description: Successful response with destination data
  *         content:
  *           application/json:
  *             schema:
@@ -42,29 +36,30 @@ import flightDeals from "../../controllers/flight_deals/flight_deals.js";
  *                   items:
  *                     type: object
  *                     properties:
+ *                       id:
+ *                         type: string
+ *                         example: "PARI"
  *                       type:
  *                         type: string
- *                         example: "flight-destination"
- *                       origin:
+ *                         example: "location"
+ *                       subtype:
  *                         type: string
- *                         example: "NYC"
- *                       destination:
+ *                         example: "city"
+ *                       name:
  *                         type: string
- *                         example: "MIA"
- *                       departureDate:
+ *                         example: "PARIS"
+ *                       detailedName:
  *                         type: string
- *                         format: date
- *                         example: "2023-12-15"
- *                       returnDate:
+ *                         example: "Paris, FR"
+ *                       iataCode:
  *                         type: string
- *                         format: date
- *                         example: "2023-12-22"
- *                       price:
+ *                         example: "PAR"
+ *                       address:
  *                         type: object
  *                         properties:
- *                           total:
+ *                           countryCode:
  *                             type: string
- *                             example: "350.00"
+ *                             example: "FR"
  *       400:
  *         description: Bad request - missing or invalid parameters
  *         content:
@@ -74,7 +69,7 @@ import flightDeals from "../../controllers/flight_deals/flight_deals.js";
  *               properties:
  *                 error:
  *                   type: string
- *                   example: "Missing required parameter: origin"
+ *                   example: "Missing required parameter: city"
  *       500:
  *         description: Internal server error
  *         content:
@@ -84,10 +79,10 @@ import flightDeals from "../../controllers/flight_deals/flight_deals.js";
  *               properties:
  *                 error:
  *                   type: string
- *                   example: "Failed to fetch flight deals"
+ *                   example: "Failed to fetch destination data"
  */
 
 export default (app) => {
-    router.get('/flight-deals', flightDeals)
+    router.get('/destinations', getDestinations)
     app.use('/', router)
 }
